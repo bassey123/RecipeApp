@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,11 +26,17 @@ public class RecipeActivity extends AppCompatActivity {
     static List<RecipeModel> recipesList;
     private RecyclerView recyclerView;
     private RecipeAdapter adapter;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         recyclerView =  findViewById(R.id.recyclerView);
         recipesList = new ArrayList<>();
@@ -47,6 +54,7 @@ public class RecipeActivity extends AppCompatActivity {
             public void onResponse(Call<List<RecipeModel>> call, Response<List<RecipeModel>> response) {
                 recipesList = response.body();
                 adapter.setRecipes(recipesList);
+                progressDialog.dismiss();
             }
 
             @Override
