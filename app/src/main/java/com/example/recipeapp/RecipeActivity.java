@@ -14,6 +14,8 @@ import com.example.recipeapp.api.RecipeAPI;
 import com.example.recipeapp.api.RecipeClient;
 import com.example.recipeapp.model.RecipeModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,6 @@ import retrofit2.Response;
 public class RecipeActivity extends AppCompatActivity {
 
     static List<RecipeModel> recipesList;
-    private RecyclerView recyclerView;
     private RecipeAdapter adapter;
     ProgressDialog progressDialog;
 
@@ -38,7 +39,7 @@ public class RecipeActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        recyclerView =  findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recipesList = new ArrayList<>();
         adapter = new RecipeAdapter(this, recipesList);
 
@@ -51,14 +52,15 @@ public class RecipeActivity extends AppCompatActivity {
         Call<List<RecipeModel>> call = service.readJson();
         call.enqueue(new Callback<List<RecipeModel>>() {
             @Override
-            public void onResponse(Call<List<RecipeModel>> call, Response<List<RecipeModel>> response) {
+            public void onResponse(@NotNull Call<List<RecipeModel>> call, @NotNull Response<List<RecipeModel>> response) {
                 recipesList = response.body();
+                assert recipesList != null;
                 adapter.setRecipes(recipesList);
                 progressDialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<List<RecipeModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<RecipeModel>> call, @NotNull Throwable t) {
                 Log.e("RecipeActivity", "Error calling API", t);
             }
         });

@@ -25,24 +25,10 @@ public class DetailsActivity extends AppCompatActivity {
     public static final String PREFERENCE_KEY_NAME = "favourite";
     Set<String> mFavourite;
     int Position;
-    TextView name;
+    TextView name, headline, description, ingredients, calories, carbos, country, difficulty;
+    TextView products, proteins, weeks, userName, email, time, fats, id;
     CircleImageView image;
     ImageView favorite;
-    TextView headline;
-    TextView description;
-    TextView ingredients;
-    TextView calories;
-    TextView carbos;
-    TextView country;
-    TextView difficulty;
-    TextView id;
-    TextView products;
-    TextView proteins;
-    TextView weeks;
-    TextView userName;
-    TextView email;
-    TextView time;
-    TextView fats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +64,7 @@ public class DetailsActivity extends AppCompatActivity {
             RecipeModel recipe = RecipeActivity.getRecipe(Position);
 
             Glide.with(this).load(recipe.getImage())
-                    .error(R.drawable.ic_launcher_background)
+                    .error(R.mipmap.ic_launcher)
                     .apply(RequestOptions.centerCropTransform())
                     .into(image);
             name.setText(recipe.getName());

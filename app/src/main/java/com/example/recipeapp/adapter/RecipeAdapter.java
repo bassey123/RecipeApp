@@ -43,10 +43,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         viewHolder.name.setText(recipeModel.getName());
 
         Glide.with(mContext).load(recipeModel.getImage())
-                .error(R.drawable.ic_launcher_background)
+                .error(R.mipmap.ic_launcher)
                 .apply(RequestOptions.centerCropTransform())
                 .into(viewHolder.image);
-
     }
 
     @Override
